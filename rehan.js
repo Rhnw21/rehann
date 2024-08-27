@@ -133,7 +133,7 @@ export async function handler(store, chatUpdate) {
               await clear()
               if (detail.amount && detail.amount != Infinity) detail.amount -= 1
               const ambilStok = detail.dataProduk.length - amount
-              const fileContent = detail.dataStok.slice(ambilStok).map((dataProduk) => `${dataProduk}`).join('\n')
+              const fileContent = detail.dataProduk.slice(ambilStok).map((dataProduk) => `${dataProduk}`).join('\n')
               const fileName = path.join(process.cwd(), `transaksi_${Date.now()}.txt`)
                 fs.writeFileSync(fileName, fileContent)
               const filePath = await this.sendMessage(m.chat, {
@@ -151,13 +151,13 @@ export async function handler(store, chatUpdate) {
               
               const captionSukses = `
 ╭─〔 *TRANSAKSI SUKSES* 〕
-│ • Nama Produk: ${detail.namaStok}
-│ • Desk Produk: ${detail.deskStok}
-│ • Harga Produk: ${detail.hargaStok}
+│ • Nama Produk: ${detail.namaProduk}
+│ • Desk Produk: ${detail.deskProduk}
+│ • Harga Produk: ${detail.hargaProduk}
 ╰────
 `.trim()
               await this.sendMessage(m.chat, { text: captionSukses }, { quoted: filePath })
-              detail.dataStok.splice(ambilStok)
+              detail.dataProduk.splice(ambilStok)
             }
           }, 10_000)
           break
