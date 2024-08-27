@@ -14,6 +14,7 @@ export const prefix = new RegExp('^([' + ('‎/!#$%+£¢€¥^°=¶∆×÷π√�
 export const execPrefix = /^×?>/
 
 export const tmp = 'sampah'
+export const paydisini = 'b50fb0c3ce72f98c3b35275c4cd81b20'
 
 if (!existsSync(tmp)) mkdirSync(tmp)
 if (!existsSync('database')) mkdirSync('database')
@@ -62,6 +63,7 @@ export default {
   logger,
   prefix,
   database,
+  paydisini,
   execPrefix,
   authFolder,
   storeFolder,
