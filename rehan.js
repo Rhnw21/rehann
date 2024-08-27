@@ -135,19 +135,11 @@ export async function handler(store, chatUpdate) {
               if (detail.amount && detail.amount != Infinity) detail.amount -= 1
               const ambilStok = detail.dataProduk.length - amount
               const fileContent = detail.dataProduk.slice(ambilStok).map((dataProduk) => `${dataProduk}`).join('\n')
-              const fileName = path.join(process.cwd(), `transaksi_${Date.now()}.txt`)
-                fs.writeFileSync(fileContent)
+              const buffer = Buffer.from(fileContent, 'utf-8')
               const filePath = await this.sendMessage(m.chat, {
-                document: { url: fileName },
+                document: { url: buffer },
                 fileName: `data_${Date.now()}`,
                 mimetype: 'text/plain'
-              })
-              fs.unlink(fileName, (err) => {
-                if (err) {
-                  console.error('Gagal menghapus file:', err);
-                } else {
-                  console.log('File berhasil dihapus:', fileName);
-                }
               })
               
               const captionSukses = `
