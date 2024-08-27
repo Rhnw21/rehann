@@ -45,7 +45,7 @@ export async function handler(store, chatUpdate) {
           let { performance } = (await import('perf_hooks')).default
           const start = performance.now()
           const latency = performance.now() - start
-          m.reply(`_Merespon dalam ${latency.toFixed(4)} detik_`)
+          m.reply(`_Merespon dalam: ${latency.toFixed(4)} detik_`)
           break
         default:
           if (Config.execPrefix.exec(m.text) && isOwner) {
