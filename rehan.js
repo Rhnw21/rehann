@@ -83,18 +83,13 @@ export async function participantsUpdate({ id, author, participants, action }) {
   console.log('groups.participants-update:', { id, author, participants, action })
 }
 
-let file = fileURLToPath(module)
+const file = fileURLToPath(import.meta.url)
 watchFile(file, () => {
+  console.log(chalk.redBright('[UPDATE]'), chalk.cyanBright('rehan.js'), 'is changed!')
   unwatchFile(file)
-  console.log(chalk.redBright('[WATCHING]'), chalk.cyanBright(file), 'is changed!')
-  import(`${file}?update=${Date.now()}`)
-  .then(() => {
-    console.log(chalk.greenBright('[UPDATED]'), chalk.cyanBright(file), 'updated!')
-  }).catch(console.error)
-    if (process.send) {
-      console.log(chalk.redBright('[WARNING] Resetting the bot...'))
-      process.send('restart')
-    }
-    
-    return true
+  import(file + '?update=' + Date.now())
+  if (process.send) {
+    console.log(chalk.redBright('[WARNING] Resetting the bot...'))
+    process.send('restart')
+  }
 })
