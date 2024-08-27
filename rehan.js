@@ -64,6 +64,16 @@ export async function handler(store, chatUpdate) {
           db.data.store[kodeProduk] = { namaProduk, hargaProduk, deskProduk, dataProduk: [] }
           m.reply('Berhasil menambhkan produk pada database!')
           break
+        case 'addstok':
+          if (!text) throw `Uhm.. Contoh: ${usedPrefix + command} kodeProduk`
+          if (!isOwner) throw 'Fitur Khusus Owner!'
+          var [kodeProduk, dataProduk] = text.split(' ')
+          var qStok = m.quoted.text
+          for (const v of qStok.split('\n')) {
+            db.data.store[kodeProduk].dataProduk.push(v)
+          }
+          m.reply('Berhasil menambhkan stok pada database!')
+          break
         default:
           if (Config.execPrefix.exec(m.text) && isOwner) {
             let i = 15
