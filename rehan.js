@@ -1,5 +1,7 @@
 import chalk from 'chalk'
 import { format } from 'util'
+import { fileURLToPath } from 'url'
+import { unwatchFile, watchFile } from 'fs'
 import { areJidsSameUser, URL_REGEX } from '@whiskeysockets/baileys'
 
 import * as Config from './config.js'
@@ -80,3 +82,19 @@ export async function deleteMessage(message) {
 export async function participantsUpdate({ id, author, participants, action }) {
   console.log('groups.participants-update:', { id, author, participants, action })
 }
+
+let file = fileURLToPath(module)
+watchFile(file, () => {
+  unwatchFile(file)
+  console.log(chalk.redBright('[WATCHING]'), chalk.cyanBright(file), 'is changed!')
+  import(`${file}?update=${Date.now()}`)
+  .then(() => {
+    console.log(chalk.greenBright('[UPDATED]'), chalk.cyanBright(file), 'updated!')
+  }).catch(console.error)
+    if (process.send) {
+      console.log(chalk.redBright('[WARNING] Resetting the bot...'))
+      process.send('restart')
+    }
+    
+    return true
+})
