@@ -197,6 +197,18 @@ export async function participantsUpdate({ id, author, participants, action }) {
   console.log('groups.participants-update:', { id, author, participants, action })
 }
 
+function generateNumericIdWithPrefix(nameId, length) {
+  let characters = '0123456789'
+  let id = nameId
+
+  for (let i = 0; i < length; i++) {
+    let randomIndex = Math.floor(Math.random() * characters.length)
+    id += characters[randomIndex]
+  }
+
+  return id
+}
+
 const file = fileURLToPath(import.meta.url)
 watchFile(file, () => {
   console.log(chalk.redBright('[WATCHING]'), chalk.cyanBright(file), 'is changed!')
