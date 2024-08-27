@@ -136,7 +136,7 @@ export async function handler(store, chatUpdate) {
               const ambilStok = detail.dataProduk.length - amount
               const fileContent = detail.dataProduk.slice(ambilStok).map((dataProduk) => `${dataProduk}`).join('\n')
               const fileName = path.join(process.cwd(), `transaksi_${Date.now()}.txt`)
-                fs.writeFileSync(fileName, fileContent)
+                fs.writeFileSync(fileContent)
               const filePath = await this.sendMessage(m.chat, {
                 document: { url: fileName },
                 fileName: `data_${Date.now()}`,
