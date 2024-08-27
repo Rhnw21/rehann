@@ -2,7 +2,7 @@ import path from 'path'
 import chalk from 'chalk'
 import { format } from 'util'
 import { fileURLToPath } from 'url'
-import { unwatchFile, watchFile } from 'fs'
+import fs, { unwatchFile, watchFile } from 'fs'
 import { areJidsSameUser, URL_REGEX } from '@whiskeysockets/baileys'
 
 import * as Config from './config.js'
