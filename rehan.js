@@ -95,7 +95,7 @@ watchFile(file, () => {
   unwatchFile(file)
   import(file + '?update=' + Date.now()).then(() => {
     console.log(chalk.greenBright('[UPDATED]'), chalk.cyanBright(file), 'updated!')
-  })
+  }).catch(e => console.error(e))
   if (process.send) {
     console.log(chalk.redBright('[WARNING] Resetting the bot...'))
     process.send('restart')
