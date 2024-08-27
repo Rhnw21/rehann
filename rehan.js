@@ -41,6 +41,7 @@ export async function handler(store, chatUpdate) {
     m.isCommand = true
     try {
       switch (command) {
+        // MAIN
         case 'ping':
           let { performance } = (await import('perf_hooks')).default
           const start = performance.now()
@@ -52,6 +53,16 @@ export async function handler(store, chatUpdate) {
           if (!isOwner) throw 'Fitur khusus Owner!'
           let stdout = await execSync('git pull')
           await m.reply(stdout?.toString?.() || stdout)
+          break
+        // STORE
+        case 'addproduk':
+          if (!text) throw `Uhm.. Contoh: ${usedPrefix + command} kodeProduk,namaProduk,hargaProduk,deskProduk`
+          if (!isOwner) throw 'Fitur Khusus Owner!'
+          var [ kodeProduk, namaProduk, hargaProduk, deskProduk ] = text.split(',')
+          if (!kodeProduk && !hargaProduk) throw `Uhm.. Contoh: ${usedPrefix + command} kodeProduk,namaProduk,hargaProduk,deskProduk`
+          kodeProduk = kodeProduk.toLowerCase()
+          db.data.store[kodeProduk] = { namaProduk, hargaProduk, deskProduk, dataProduk: [] }
+          m.reply('Berhasil menambhkan produk pada database!')
           break
         default:
           if (Config.execPrefix.exec(m.text) && isOwner) {
