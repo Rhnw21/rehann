@@ -91,9 +91,10 @@ export async function participantsUpdate({ id, author, participants, action }) {
 
 const file = fileURLToPath(import.meta.url)
 watchFile(file, () => {
-  console.log(chalk.redBright('[UPDATE]'), chalk.cyanBright('rehan.js'), 'is changed!')
+  console.log(chalk.redBright('[WATCHING]'), chalk.cyanBright(file), 'is changed!')
   unwatchFile(file)
-  import(file + '?update=' + Date.now())
+  import(file + '?update=' + Date.now()).then(() => {
+    console.log(chalk.greenBright('[UPDATED]'), chalk.cyanBright(file), 'updated!')
   if (process.send) {
     console.log(chalk.redBright('[WARNING] Resetting the bot...'))
     process.send('restart')
