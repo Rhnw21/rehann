@@ -78,6 +78,89 @@ export async function handler(store, chatUpdate) {
           }
           m.reply('Berhasil menambhkan stok pada database!')
           break
+        case 'order':
+          let paydisini = (await import('./lib/paydisini.js')).default
+          if (!listProduk.length) throw 'Tidak ada stok yang tersedia!'
+          let [type, amount] = text.split(' ')
+          const detail = listProduk.find(([key]) => key == type)?.[1]
+          if (!detail) throw 'Produk tersebut tidak ada!'
+          if (!detail.dataProduk.length) throw 'Maaf stok yang anda cari telah habis!'
+          if (amount > detail.dataProduk.length) throw `Maaf stok yang tersedia hanya ${detail.dataProduk.length}`
+          const number = parseInt(m.sender)
+          const pay = (db.pay = db.pay || new paydisini(Config.paydisini))
+          pay[m.sender] = pay[m.sender] || {}
+          pay[m.sender][type] = pay[m.sender][type] || {}
+          const buy = pay[m.sender][type][amount] = pay[m.sender][type][amount] || {}
+          if (buy.msg) throw 'Selesaikan transaksi anda sebelumnya!'
+          const res = await pay.create(detail.hargaProduk * amount, `${number} order ${type}`, {
+            ewalet_phone: number
+          })
+          if (!res.success) {
+            delete db.pay
+            throw res
+          }
+          const captionPay = `
+*STATUS PEMBAYARAN*
+
+*ID:* ${generateNumericIdWithPrefix('BR', '12')}
+*Nama Produk:* ${detail.namaProduk}
+*Harga Produk:* Rp ${parseInt(res.data.balance).toLocaleString('id')}
+*Total Fee:* Rp ${parseInt(res.data.fee).toLocaleString('id')}
+*Total Harus Dibayar:* Rp ${parseInt(res.data.amount).toLocaleString('id')}
+*Status Transaksi:* ${res.data.status}
+*Transaksi Expired:* ${res.data.expired}
+`.trim()
+          buy.msg  = await this.sendMessage(m.chat, {
+            image: { url: res.data.qrcode_url },
+            caption: captionPay
+          })
+          buy.interval = setInterval(async () => {
+            const clear = async () => {
+              await this.sendMessage(m.chat, { delete: buy.msg.key })
+              clearInterval(buy.interval)
+              delete pay[m.sender][type][amount]
+              if (!Object.keys(pay[m.sender][type]).length)
+              delete pay[m.sender][type]
+              if (!Object.keys(pay[m.sender]).length) delete pay[m.sender]
+            }
+            if (new Date() > new Date(res.data.expired)) {
+              await m.reply('Waktu telah habis. Transaksi dibatalkan.')
+              await clear()
+              return
+            }
+            const check = await pay.check(res.data.unique_code)
+            if (isOwner || check.data.status.toLowerCase() == 'success') {
+              await clear()
+              if (detail.amount && detail.amount != Infinity) detail.amount -= 1
+              const ambilStok = detail.dataStok.length - amount
+              const fileContent = detail.dataStok.slice(ambilStok).map((dataProduk) => `${dataProduk}`).join('\n')
+              const fileName = path.join(process.cwd(), `transaksi_${Date.now()}.txt`)
+                fs.writeFileSync(fileName, fileContent)
+              const filePath = await this.sendMessage(m.chat, {
+                document: { url: fileName },
+                fileName: `data_${Date.now()}`,
+                mimetype: 'text/plain'
+              })
+              fs.unlink(fileName, (err) => {
+                if (err) {
+                  console.error('Gagal menghapus file:', err);
+                } else {
+                  console.log('File berhasil dihapus:', fileName);
+                }
+              })
+              
+              const captionSukses = `
+╭─〔 *TRANSAKSI SUKSES* 〕
+│ • Nama Produk: ${detail.namaStok}
+│ • Desk Produk: ${detail.deskStok}
+│ • Harga Produk: ${detail.hargaStok}
+╰────
+`.trim()
+              await this.sendMessage(m.chat, { text: captionSukses }, { quoted: filePath })
+              detail.dataStok.splice(ambilStok)
+            }
+          }, 10_000)
+          break
         default:
           if (Config.execPrefix.exec(m.text) && isOwner) {
             let i = 15
