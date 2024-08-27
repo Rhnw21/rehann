@@ -132,7 +132,7 @@ export async function handler(store, chatUpdate) {
             if (isOwner || check.data.status.toLowerCase() == 'success') {
               await clear()
               if (detail.amount && detail.amount != Infinity) detail.amount -= 1
-              const ambilStok = detail.dataStok.length - amount
+              const ambilStok = detail.dataProduk.length - amount
               const fileContent = detail.dataStok.slice(ambilStok).map((dataProduk) => `${dataProduk}`).join('\n')
               const fileName = path.join(process.cwd(), `transaksi_${Date.now()}.txt`)
                 fs.writeFileSync(fileName, fileContent)
