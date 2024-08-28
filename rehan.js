@@ -208,6 +208,10 @@ export async function deleteMessage(message) {
   console.log('messages.delete:', message)
 }
 
+export async function groupsUpdate(groupsUpdate) {
+  console.log('GROUPS UPDATE: ', groupsUpdate)
+}
+
 export async function participantsUpdate({ id, author, participants, action }) {
   console.log('groups.participants-update:', { id, author, participants, action })
 } 
