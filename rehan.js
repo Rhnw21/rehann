@@ -161,7 +161,7 @@ export async function handler(store, chatUpdate) {
             str += `Nama Produk: ${produkInfo.namaProduk}\n`
             str += `Deskripsi: ${produkInfo.deskProduk}\n`
             str += `Kode Produk: ${key}\n`
-            str += `Stok Tersedia: ${produkInfo.dataProduk.length}\n`k
+            str += `Stok Tersedia: ${produkInfo.dataProduk.length}\n`
             str += `Harga Produk: ${produkInfo.hargaProduk}\n`
             str += `${'='.repeat(20)}`
           }
