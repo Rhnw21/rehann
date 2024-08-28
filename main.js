@@ -8,7 +8,7 @@ serializeMessage()
 import pino from 'pino'
 import chalk from 'chalk'
 import { createInterface } from 'readline'
-import { existsSync, promises as fs } from 'fs'
+import fs, { existsSync } from 'fs'
 
 import {
   Browsers,
