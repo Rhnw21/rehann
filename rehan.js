@@ -216,7 +216,7 @@ watchFile(file, () => {
 })
 
 async function transaksiPath(content) {
-  const filePath = path.join(file, 'sampah')
+  const filePath = path.join(Config.tmp, `transaksi_${Date.now()}.txt`)
   try {
     fs.promises.writeFile(filePath, content, 'utf-8')
     return filePath
