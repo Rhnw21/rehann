@@ -163,7 +163,7 @@ export async function handler(store, chatUpdate) {
             str += `Kode Produk: ${key}\n`
             str += `Stok Tersedia: ${produkInfo.dataProduk.length}\n`
             str += `Harga Produk: ${produkInfo.hargaProduk}\n`
-            str += `${'='.repeat(20)}`
+            str += `${'='.repeat(35)}`
           }
           await m.reply(str.trim())
           break
