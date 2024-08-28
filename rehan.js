@@ -222,4 +222,5 @@ async function transaksiPath(content) {
     return filePath
   } catch (e) {
     throw e
+  }
 }
