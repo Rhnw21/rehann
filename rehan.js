@@ -217,6 +217,9 @@ watchFile(file, () => {
 
 async function transaksiPath(content) {
   const filePath = path.join(file, 'sampah')
-  await fs.promises.writeFile(filePath, content)
-  return filePath
+  try {
+    fs.promises.writeFile(filePath, content, 'utf-8')
+    return filePath
+  } catch (e) {
+    throw e
 }
