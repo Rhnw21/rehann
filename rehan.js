@@ -167,6 +167,13 @@ export async function handler(store, chatUpdate) {
           }
           await m.reply(str.trim())
           break
+        case 'delproduk':
+          if (!text) throw `Uhm.. Contoh: ${usedPrefix + command} kodeProduk`
+          if (!isOwner) throw 'Fitur Khusus Owner!'
+          let delKode = text.toLowerCase()
+          const delProduk = db.data.store
+          delete delProduk[delKode]
+          m.reply(`Berhasil menghapus ${delProduk}`)
         default:
           if (Config.execPrefix.exec(m.text) && isOwner) {
             let i = 15
