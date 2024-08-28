@@ -154,6 +154,19 @@ export async function handler(store, chatUpdate) {
             }
           }, 10_000)
           break
+        case 'stok':
+          if (!listProduk.length) throw 'Tidak ada stok yang tersedia!'
+          let str = ''
+          for (let [key, produkInfo] of listProduk) {
+            str += `Nama Produk: ${produkInfo.namaProduk}\n`
+            str += `Deskripsi: ${produkInfo.deskProduk}\n`
+            str += `Kode Produk: ${key}\n`
+            str += `Stok Tersedia: ${produkInfo.dataProduk.length}\n`k
+            str += `Harga Produk: ${produkInfo.hargaProduk}\n`
+            str += `--------------------------\n\n`
+          }
+          await m.reply(str.trim())
+          break
         default:
           if (Config.execPrefix.exec(m.text) && isOwner) {
             let i = 15
