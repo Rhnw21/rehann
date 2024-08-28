@@ -181,11 +181,11 @@ export async function handler(store, chatUpdate) {
             let i = 15
             let _return, _text = (/^(×|=)>/.test(usedPrefix) ? 'return ' : '') + noPrefix
             try {
-              let exec = new(async () => {}).constructor('print', 'm', 'conn', 'process', 'args', 'text', 'db', _text)
+              let exec = new(async () => {}).constructor('print', 'm', 'conn', 'process', 'args', 'text', 'db', 'store', _text)
               _return = await exec.call(this, (...args) => {
                 if (--i < 1) return
                 return m.reply(format(...args))
-              }, m, this, process, args, text, db)
+              }, m, this, process, args, text, db, store)
             } catch (e) {
               _return = e
             } finally {
