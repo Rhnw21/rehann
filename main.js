@@ -106,7 +106,17 @@ async function startSock() {
 startSock()
 
 // save database interval 30 detik
-setInterval(() => db.write(), 30000)
+setInterval(() => {
+  db.write()
+  fs.readdir(Config.tmp, (err, files) => {
+    if (err) throw err
+    for (const file of files) {
+      fs.unlink(path.join(folderPath, file), err => {
+        if (err) throw err
+      })
+    }
+  })
+}, 30000)
 
 async function connectionUpdate(update) {
   // @ts-ignore
