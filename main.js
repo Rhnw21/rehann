@@ -112,7 +112,7 @@ setInterval(() => {
   fs.readdir(Config.tmp, (err, files) => {
     if (err) throw err
     for (const file of files) {
-      fs.unlink(path.join(folderPath, file), err => {
+      fs.unlink(path.join(Config.tmp, file), err => {
         if (err) throw err
       })
     }
