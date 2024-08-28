@@ -149,7 +149,7 @@ export async function handler(store, chatUpdate) {
 │ • Harga Produk: ${detail.hargaProduk}
 ╰────
 `.trim()
-              await this.sendMessage(m.chat, { text: captionSukses }, { quoted: filePath })
+              await this.sendMessage(m.chat, { text: captionSukses }, { quoted: fileNow })
               detail.dataProduk.splice(ambilStok)
             }
           }, 10_000)
@@ -216,7 +216,7 @@ watchFile(file, () => {
 })
 
 async function transaksiPath(content) {
-  const filePath = path.join(file, Config.tmp)
+  const filePath = path.join(file, 'sampah')
   await fs.promises.writeFile(filePath, content)
   return filePath
 }
