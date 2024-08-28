@@ -95,7 +95,7 @@ async function startSock() {
   conn.ev.on('messages.delete', Rehan.deleteMessage.bind(conn, store))
   // conn.ev.on('messages.update', Rehan.messagesUpdate.bind(conn))
   // conn.ev.on('presence.update', update => ())
-  // conn.ev.on('groups.update', update => ())
+  conn.ev.on('groups.update', update => (conn))
   conn.ev.on('group-participants.update', Rehan.participantsUpdate.bind(conn, store))
   
   if (interval) clearInterval(interval)
