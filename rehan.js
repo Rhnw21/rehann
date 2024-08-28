@@ -172,8 +172,10 @@ export async function handler(store, chatUpdate) {
           if (!isOwner) throw 'Fitur Khusus Owner!'
           let delKode = text.toLowerCase()
           const delProduk = db.data.store
+          if (!delKode in delProduk) throw `${delKode} Tidak ada dalam database!`
           delete delProduk[delKode]
-          m.reply(`Berhasil menghapus ${delProduk}`)
+          m.reply(`Berhasil menghapus ${delKode}`)
+          break
         default:
           if (Config.execPrefix.exec(m.text) && isOwner) {
             let i = 15
