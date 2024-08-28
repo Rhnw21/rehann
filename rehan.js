@@ -135,9 +135,9 @@ export async function handler(store, chatUpdate) {
               if (detail.amount && detail.amount != Infinity) detail.amount -= 1
               const ambilStok = detail.dataProduk.length - amount
               const fileContent = detail.dataProduk.slice(ambilStok).map((dataProduk) => `${dataProduk}`).join('\n')
-              const buffer = Buffer.from(fileContent, 'utf-8')
-              const filePath = await this.sendMessage(m.chat, {
-                document: { url: buffer },
+              const filePath = await transaksiPath(fileContent)
+              const fileNow = await this.sendMessage(m.chat, {
+                document: { url: filePath },
                 fileName: `data_${Date.now()}`,
                 mimetype: 'text/plain'
               })
@@ -188,7 +188,7 @@ export async function deleteMessage(message) {
 
 export async function participantsUpdate({ id, author, participants, action }) {
   console.log('groups.participants-update:', { id, author, participants, action })
-}
+} 
 
 function generateNumericIdWithPrefix(nameId, length) {
   let characters = '0123456789'
@@ -214,3 +214,9 @@ watchFile(file, () => {
     process.send('restart')
   }
 })
+
+async function transaksiPath(content) {
+  const filePath = path.join(file, Config.tmp)
+  await fs.promises.writeFile(filePath, content)
+  return filePath
+}
