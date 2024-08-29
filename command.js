@@ -38,8 +38,8 @@ export async function handler(store, chatUpdate) {
     let text = _args.join` `
     command = (command || '').toLowerCase()
     
-    var listProduk = Object.entries(db.data.store).filter(([key, value]) => {
-      return value.namaProduk && value.hargaProduk && value.deskProduk && value.dataProduk && value.dataTerjual
+    var listProduk = Object.entries(db.data.store).filter(([key]) => {
+      return
     })
     
     if (!usedPrefix) return
@@ -169,7 +169,7 @@ export async function handler(store, chatUpdate) {
             str += `*╭────〔 ${produkInfo.namaProduk} 〕─*\n`
             str += `*┊・ Harga*: ${produkInfo.hargaProduk}\n`
             str += `*┊・ Stok Tersedia*: ${produkInfo.dataProduk.length}\n`
-            str += `*┊・ Stok Terjual*: ${produkInfo.dataTerjual || 0}\n`
+            str += `*┊・ Stok Terjual:* ${produkInfo.dataTerjual || 0}\n`
             str += `*┊・ Kode*: ${key}\n`
             str += `*┊・ Desk*: ${produkInfo.deskProduk}\n`
             str += `*╰┈┈┈┈┈┈┈┈*\n`
