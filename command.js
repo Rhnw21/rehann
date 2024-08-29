@@ -156,7 +156,7 @@ export async function handler(store, chatUpdate) {
           }, 10_000)
           break
         case 'stok':
-          //if (!listProduk.length) throw 'Tidak ada stok yang tersedia!'
+          if (!listProduk.length) throw 'Tidak ada stok yang tersedia!'
           let str = `
 *╭────〔 PRODUCT LIST 〕─*
 *┊・* Cara Membeli Produk Ketik Perintah Berikut
@@ -169,7 +169,7 @@ export async function handler(store, chatUpdate) {
             str += `*╭────〔 ${produkInfo.namaProduk} 〕─*\n`
             str += `*┊・ Harga*: ${produkInfo.hargaProduk}\n`
             str += `*┊・ Stok Tersedia*: ${produkInfo.dataProduk.length}\n`
-            str += `*┊・ Stok Terjual*: ${produkInfo.dataTerjual}\n`
+            str += `*┊・ Stok Terjual*: ${produkInfo.dataTerjual || 0}\n`
             str += `*┊・ Kode*: ${key}\n`
             str += `*┊・ Desk*: ${produkInfo.deskProduk}\n`
             str += `*╰┈┈┈┈┈┈┈┈*\n`
