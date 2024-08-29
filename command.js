@@ -39,7 +39,7 @@ export async function handler(store, chatUpdate) {
     command = (command || '').toLowerCase()
     
     var listProduk = Object.entries(db.data.store).filter(([key, value]) => {
-      return value.namaProduk && value.hargaProduk && value.deskProduk && value.dataProduk
+      return value.namaProduk && value.hargaProduk && value.deskProduk && value.dataProduk && value.dataTerjual
     })
     
     if (!usedPrefix) return
