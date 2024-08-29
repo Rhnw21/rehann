@@ -163,6 +163,7 @@ export async function handler(store, chatUpdate) {
 *┊・* Contoh: *${usedPrefix}buy gmail 1*
 *┊・* Kontak Admin: ${Config.owner}
 *╰┈┈┈┈┈┈┈┈*\n\n`
+
           for (let [key, produkInfo] of listProduk) {
             str += `*╭────〔 ${produkInfo.namaProduk} 〕─*\n`
             str += `*┊・ Harga*: ${produkInfo.hargaProduk}\n`
