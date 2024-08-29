@@ -38,8 +38,8 @@ export async function handler(store, chatUpdate) {
     let text = _args.join` `
     command = (command || '').toLowerCase()
     
-    var listProduk = Object.entries(db.data.store).filter(([key]) => {
-      return
+    var listProduk = Object.entries(db.data.store).filter(([key, value]) => {
+      return value.namaProduk && value.hargaProduk && value.deskProduk && value.dataProduk
     })
     
     if (!usedPrefix) return
@@ -133,7 +133,6 @@ export async function handler(store, chatUpdate) {
             if (isOwner || check.data.status.toLowerCase() == 'success') {
               await clear()
               if (detail.amount && detail.amount != Infinity) detail.amount -= 1
-              //detail.dataTerjual = (detail.dataTerjual) + parseInt(amount)
               const ambilStok = detail.dataProduk.length - amount
               const fileContent = detail.dataProduk.slice(ambilStok).map((dataProduk) => `${dataProduk}`).join('\n')
               const filePath = await transaksiPath(fileContent)
@@ -169,7 +168,6 @@ export async function handler(store, chatUpdate) {
             str += `*╭────〔 ${produkInfo.namaProduk} 〕─*\n`
             str += `*┊・ Harga*: ${produkInfo.hargaProduk}\n`
             str += `*┊・ Stok Tersedia*: ${produkInfo.dataProduk.length}\n`
-            //str += `*┊・ Stok Terjual:* ${produkInfo.dataTerjual || 0}\n`
             str += `*┊・ Kode*: ${key}\n`
             str += `*┊・ Desk*: ${produkInfo.deskProduk}\n`
             str += `*╰┈┈┈┈┈┈┈┈*\n`
