@@ -66,7 +66,7 @@ export async function handler(store, chatUpdate) {
           var [ kodeProduk, namaProduk, hargaProduk, deskProduk ] = text.split(',')
           if (!kodeProduk && !hargaProduk) throw `Uhm.. Contoh: ${usedPrefix + command} kodeProduk,namaProduk,hargaProduk,deskProduk`
           kodeProduk = kodeProduk.toLowerCase()
-          db.data.store[kodeProduk] = { namaProduk, hargaProduk, deskProduk, dataProduk: [] }
+          db.data.store[kodeProduk] = { namaProduk, hargaProduk, deskProduk, dataProduk: [], dataTerjual: 0 }
           m.reply('Berhasil menambhkan produk pada database!')
           break
         case 'addstok':
@@ -212,10 +212,6 @@ export async function handler(store, chatUpdate) {
 
 export async function deleteMessage(message) {
   console.log('messages.delete:', message)
-}
-
-export async function groupsUpdate(groupsUpdate) {
-  console.log('GROUPS UPDATE: ', groupsUpdate)
 }
 
 export async function participantsUpdate({ id, author, participants, action }) {
