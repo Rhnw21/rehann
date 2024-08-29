@@ -38,7 +38,7 @@ export async function handler(store, chatUpdate) {
     let text = _args.join` `
     command = (command || '').toLowerCase()
     
-    var listProduk = Object.entries(db.data.store).filter(([key]))
+    var listProduk = Object.entries(db.data.store).filter(([key])) return
     
     if (!usedPrefix) return
     m.isCommand = true
