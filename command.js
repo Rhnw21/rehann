@@ -168,7 +168,8 @@ export async function handler(store, chatUpdate) {
           for (let [key, produkInfo] of listProduk) {
             str += `*╭────〔 ${produkInfo.namaProduk} 〕─*\n`
             str += `*┊・ Harga*: ${produkInfo.hargaProduk}\n`
-            str += `*┊・ Stok Tersedia*: ${produkInfo.dataProduk.length} ${produkInfo.dataTerjual}\n`
+            str += `*┊・ Stok Tersedia*: ${produkInfo.dataProduk.length}\n`
+            str += `*┊・ Stok Terjual*: ${produkInfo.dataTerjual}\n`
             str += `*┊・ Kode*: ${key}\n`
             str += `*┊・ Desk*: ${produkInfo.deskProduk}\n`
             str += `*╰┈┈┈┈┈┈┈┈*\n`
