@@ -19,7 +19,7 @@ import {
   makeCacheableSignalKeyStore
 } from '@whiskeysockets/baileys'
 
-import * as Rehan from './rehan.js'
+import * as Rehan from './command.js'
 
 import Config from './config.js'
 import Store from './lib/store.js'
