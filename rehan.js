@@ -170,7 +170,7 @@ export async function handler(store, chatUpdate) {
         case 'delproduk':
           if (!text) throw `Uhm.. Contoh: ${usedPrefix + command} kodeProduk`
           if (!isOwner) throw 'Fitur Khusus Owner!'
-          delete db.data.store[kodeProduk]
+          delete db.data.store[kodeProduk].toLowerCase()
           m.reply(`Berhasil menghapus ${kodeProduk}`)
           break
         default:
