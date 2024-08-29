@@ -171,7 +171,7 @@ export async function handler(store, chatUpdate) {
           if (!text) throw `Uhm.. Contoh: ${usedPrefix + command} kodeProduk`
           if (!isOwner) throw 'Fitur Khusus Owner!'
           delete db.data.store[kodeProduk.toLowerCase()]
-          m.reply(`Berhasil menghapus ${delKode}`)
+          m.reply(`Berhasil menghapus ${kodeProduk}`)
           break
         default:
           if (Config.execPrefix.exec(m.text) && isOwner) {
