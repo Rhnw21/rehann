@@ -79,7 +79,7 @@ export async function handler(store, chatUpdate) {
           }
           m.reply('Berhasil menambhkan stok pada database!')
           break
-        case 'order':
+        case 'buy':
           let paydisini = (await import('./lib/paydisini.js')).default
           if (!listProduk.length) throw 'Tidak ada stok yang tersedia!'
           let [type, amount] = text.split(' ')
@@ -156,14 +156,20 @@ export async function handler(store, chatUpdate) {
           break
         case 'stok':
           if (!listProduk.length) throw 'Tidak ada stok yang tersedia!'
-          let str = ''
+          let str = `
+*╭────〔 PRODUCT LIST 〕─*
+*┊・* Cara Membeli Produk Ketik Perintah Berikut
+*┊・* ${usedPrefix}buy *<kode> <jumlah>*
+*┊・* Contoh: *${usedPrefix}buy gmail 1*
+*┊・* Kontak Admin: ${Config.owner}
+*╰┈┈┈┈┈┈┈┈*\n\n`
           for (let [key, produkInfo] of listProduk) {
-            str += `Nama Produk: ${produkInfo.namaProduk}\n`
-            str += `Deskripsi: ${produkInfo.deskProduk}\n`
-            str += `Kode Produk: ${key}\n`
-            str += `Stok Tersedia: ${produkInfo.dataProduk.length}\n`
-            str += `Harga Produk: ${produkInfo.hargaProduk}\n`
-            str += `${'='.repeat(20)}`
+            str += `*╭────〔 ${produkInfo.namaProduk} 〕─*\n`
+            str += `*┊・ Harga*: ${produkInfo.hargaProduk}\n`
+            str += `*┊・ Stok Tersedia*: ${produkInfo.dataProduk.length}\n`
+            str += `*┊・ Kode*: ${key}\n`
+            str += `*┊・ Desk*: ${produkInfo.deskProduk}\n`
+            str += `*╰┈┈┈┈┈┈┈┈*\n`
           }
           await m.reply(str.trim())
           break
