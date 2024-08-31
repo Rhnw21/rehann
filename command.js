@@ -154,19 +154,21 @@ export async function handler(store, chatUpdate) {
           m.reply(`Berhasil menghapus ${delProduk}`)
           break
         default:
-          function sendStok(text) {
-            let str = text || ''
-            for (let [key, produkInfo] of listProduk) {
-              str += `*╭────〔 ${produkInfo.namaProduk} 〕─*\n`
-              str += `*┊・ Harga*: ${produkInfo.hargaProduk}\n`
-              str += `*┊・ Stok Tersedia*: ${produkInfo.dataProduk.length}\n`
-              str += `*┊・ Stok Terjual*: ${produkInfo.dataTerjual}\n`
-              str += `*┊・ Kode*: ${key}\n`
-              str += `*┊・ Desk*: ${produkInfo.deskProduk}\n`
-              str += `*╰┈┈┈┈┈┈┈┈*\n`
-            }
-          }
-          await m.reply(str.trim())
+          if (!listProduk.length) throw 'Tidak ada produk tersedia!!'
+          sendStok()
+      }
+      function sendStok(text) {
+        let str = text || ''
+        for (let [key, produkInfo] of listProduk) {
+          str += `*╭────〔 ${produkInfo.namaProduk} 〕─*\n`
+          str += `*┊・ Harga*: ${produkInfo.hargaProduk}\n`
+          str += `*┊・ Stok Tersedia*: ${produkInfo.dataProduk.length}\n`
+          str += `*┊・ Stok Terjual*: ${produkInfo.dataTerjual}\n`
+          str += `*┊・ Kode*: ${key}\n`
+          str += `*┊・ Desk*: ${produkInfo.deskProduk}\n`
+          str += `*╰┈┈┈┈┈┈┈┈*\n`
+        }
+        await m.reply(str.trim())
       }
     } catch (e) {
       m.error = e
