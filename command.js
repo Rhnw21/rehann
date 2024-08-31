@@ -160,13 +160,13 @@ export async function handler(store, chatUpdate) {
       function sendStok(text) {
         let str = text || ''
         for (let [key, produkInfo] of listProduk) {
-          str += `*╭────〔 ${produkInfo.namaProduk} 〕─*\n`
-          str += `*┊・ Harga*: ${produkInfo.hargaProduk}\n`
-          str += `*┊・ Stok Tersedia*: ${produkInfo.dataProduk.length}\n`
-          str += `*┊・ Stok Terjual*: ${produkInfo.dataTerjual}\n`
-          str += `*┊・ Kode*: ${key}\n`
-          str += `*┊・ Desk*: ${produkInfo.deskProduk}\n`
-          str += `*╰┈┈┈┈┈┈┈┈*\n`
+          str += `*Nama Produk:* ${produkInfo.namaProduk}\n`
+          str += `*Desk Produk:* ${produkInfo.deskProduk}\n`
+          str += `*Kode Produk:* ${key}\n`
+          str += `*Harga Produk:* ${produkInfo.hargaProduk}\n`
+          str += `*Stok Tersedia:* ${produkInfo.dataProduk.length}\n`
+          str += `*Stok Terjual:* ${produkInfo.dataTerjual}\n`
+          str += `*${'='.repeat(25)}*\n`
         }
         m.reply(str.trim())
       }
