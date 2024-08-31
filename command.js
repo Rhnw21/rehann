@@ -11,7 +11,10 @@ import printMessage from './lib/printMessage.js'
 import helperMessage from './lib/helperMessage.js'
 import db, { loadDatabase } from './lib/database.js'
 
-const isNumber = x => (x = typeof x === 'string' ? parseInt(x) : x) && typeof x === 'number' && !isNaN(x)
+var listProduk = Object.entries(db.data.store).filter(([key, value]) => {
+  return value.namaProduk && value.hargaProduk && value.deskProduk && value.dataProduk
+})
+
 export async function handler(store, chatUpdate) {
   if (db.data == null) await loadDatabase()
   if (!chatUpdate.messages) return
@@ -37,10 +40,6 @@ export async function handler(store, chatUpdate) {
     const _args = noPrefix.trim().split` `.slice(1)
     let text = _args.join` `
     command = (command || '').toLowerCase()
-    
-    var listProduk = Object.entries(db.data.store).filter(([key, value]) => {
-      return value.namaProduk && value.hargaProduk && value.deskProduk && value.dataProduk
-    })
     
     if (!usedPrefix) return
     m.isCommand = true
