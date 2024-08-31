@@ -44,7 +44,7 @@ export async function handler(store, chatUpdate) {
     if (!usedPrefix) return
     m.isCommand = true
     try {
-      switch (command.replace(/stok/i, '')) {
+      switch (command) {
         // MAIN
         case 'ping':
           let { performance } = (await import('perf_hooks')).default
@@ -153,9 +153,26 @@ export async function handler(store, chatUpdate) {
           delete db.data.store[delProduk]
           m.reply(`Berhasil menghapus ${delProduk}`)
           break
-        default:
+        case 'stok':
           if (!listProduk.length) throw 'Tidak ada produk tersedia!!'
           await sendStok()
+          break
+        default:
+          if (Config.execPrefix.exec(m.text) && isOwner) {
+            let i = 15
+            let _return, _text = (/^(×|=)>/.test(usedPrefix) ? 'return ' : '') + noPrefix
+            try {
+              let exec = new(async () => {}).constructor('print', 'm', 'conn', 'process', 'args', 'text', 'db', _text)
+              _return = await exec.call(this, (...args) => {
+                if (--i < 1) return
+                return m.reply(format(...args))
+              }, m, this, process, args, text, db)
+            } catch (e) {
+              _return = e
+            } finally {
+              await m.reply(format(_return))
+            }
+          }
       }
       function sendStok(text) {
         let str = text || ''
