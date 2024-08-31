@@ -103,7 +103,6 @@ export async function handler(store, chatUpdate) {
           const captionPay = `
 *STATUS PEMBAYARAN*
 
-*ID:* ${generateNumericIdWithPrefix('BR', '12')}
 *Nama Produk:* ${detail.namaProduk}
 *Harga Produk:* Rp ${parseInt(res.data.balance).toLocaleString('id')}
 *Total Fee:* Rp ${parseInt(res.data.fee).toLocaleString('id')}
@@ -140,7 +139,8 @@ export async function handler(store, chatUpdate) {
               const fileNow = await this.sendMessage(m.chat, {
                 document: { url: filePath },
                 fileName: `data_${Date.now()}`,
-                mimetype: 'text/plain'
+                mimetype: 'text/plain',
+                caption: ``
               })
               
               const captionSukses = `
@@ -157,24 +157,7 @@ export async function handler(store, chatUpdate) {
           break
         case 'stok':
           if (!listProduk.length) throw 'Tidak ada stok yang tersedia!'
-          let str = `
-*╭────〔 PRODUCT LIST 〕─*
-*┊・* Cara Membeli Produk Ketik Perintah Berikut
-*┊・* ${usedPrefix}buy *<kode> <jumlah>*
-*┊・* Contoh: *${usedPrefix}buy gmail 1*
-*┊・* Kontak Admin: ${Config.owner}
-*╰┈┈┈┈┈┈┈┈*\n\n`
-
-          for (let [key, produkInfo] of listProduk) {
-            str += `*╭────〔 ${produkInfo.namaProduk} 〕─*\n`
-            str += `*┊・ Harga*: ${produkInfo.hargaProduk}\n`
-            str += `*┊・ Stok Tersedia*: ${produkInfo.dataProduk.length}\n`
-            str += `*┊・ Stok Terjual*: ${produkInfo.dataTerjual}\n`
-            str += `*┊・ Kode*: ${key}\n`
-            str += `*┊・ Desk*: ${produkInfo.deskProduk}\n`
-            str += `*╰┈┈┈┈┈┈┈┈*\n`
-          }
-          await m.reply(str.trim())
+          sendStok()
           break
         case 'delproduk':
           if (!text) throw `Uhm.. Contoh: ${usedPrefix + command} kodeProduk`
@@ -212,6 +195,20 @@ export async function handler(store, chatUpdate) {
   }
 }
 
+function sendStok(text) {
+  let str = text || ''
+  for (let [key, produkInfo] of listProduk) {
+    str += `*╭────〔 ${produkInfo.namaProduk} 〕─*\n`
+    str += `*┊・ Harga*: ${produkInfo.hargaProduk}\n`
+    str += `*┊・ Stok Tersedia*: ${produkInfo.dataProduk.length}\n`
+    str += `*┊・ Stok Terjual*: ${produkInfo.dataTerjual}\n`
+    str += `*┊・ Kode*: ${key}\n`
+    str += `*┊・ Desk*: ${produkInfo.deskProduk}\n`
+    str += `*╰┈┈┈┈┈┈┈┈*\n`
+  }
+  await m.reply(str.trim())
+}
+
 export async function deleteMessage(message) {
   console.log('messages.delete:', message)
 }
@@ -219,18 +216,6 @@ export async function deleteMessage(message) {
 export async function participantsUpdate({ id, author, participants, action }) {
   console.log('groups.participants-update:', { id, author, participants, action })
 } 
-
-function generateNumericIdWithPrefix(nameId, length) {
-  let characters = '0123456789'
-  let id = nameId
-
-  for (let i = 0; i < length; i++) {
-    let randomIndex = Math.floor(Math.random() * characters.length)
-    id += characters[randomIndex]
-  }
-
-  return id
-}
 
 const file = fileURLToPath(import.meta.url)
 watchFile(file, () => {
@@ -247,10 +232,6 @@ watchFile(file, () => {
 
 async function transaksiPath(content) {
   const filePath = path.join(Config.tmp, `transaksi_${Date.now()}.txt`)
-  try {
-    fs.promises.writeFile(filePath, content, 'utf-8')
-    return filePath
-  } catch (e) {
-    throw e
-  }
+  fs.promises.writeFile(filePath, content, 'utf-8')
+  return filePath
 }
