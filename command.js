@@ -155,7 +155,7 @@ export async function handler(store, chatUpdate) {
           break
         default:
           if (!listProduk.length) throw 'Tidak ada produk tersedia!!'
-          sendStok()
+          await sendStok()
       }
       function sendStok(text) {
         let str = text || ''
