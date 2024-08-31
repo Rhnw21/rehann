@@ -168,7 +168,7 @@ export async function handler(store, chatUpdate) {
           str += `*┊・ Desk*: ${produkInfo.deskProduk}\n`
           str += `*╰┈┈┈┈┈┈┈┈*\n`
         }
-        await m.reply(str.trim())
+        m.reply(str.trim())
       }
     } catch (e) {
       m.error = e
