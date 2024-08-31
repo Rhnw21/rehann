@@ -161,9 +161,9 @@ export async function handler(store, chatUpdate) {
         let str = text || ''
         for (let [key, produkInfo] of listProduk) {
           str += `乂 ${produkInfo.namaProduk}\n`
-          str += `*×* Desk: ${produkInfo.deskProduk}\n`
-          str += `*×* Harga: ${produkInfo.hargaProduk}\n`
           str += `*×* Kode: ${key}\n`
+          str += `*×* Harga: ${produkInfo.hargaProduk}\n`
+          str += `*×* Desk: ${produkInfo.deskProduk}\n`
           str += `*×* Stok Tersedia: ${produkInfo.dataProduk.length}\n`
           str += `*×* Stok Terjual: ${produkInfo.dataTerjual}\n`
           str += `*${'='.repeat(25)}*\n`
