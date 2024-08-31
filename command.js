@@ -166,7 +166,7 @@ export async function handler(store, chatUpdate) {
           str += `*×* Harga: ${produkInfo.hargaProduk}\n`
           str += `*×* Stok Tersedia: ${produkInfo.dataProduk.length}\n`
           str += `*×* Stok Terjual: ${produkInfo.dataTerjual}\n`
-          str += `*${'='.repeat(35)}*\n`
+          str += `*${'='.repeat(25)}*\n`
         }
         m.reply(str.trim())
       }
