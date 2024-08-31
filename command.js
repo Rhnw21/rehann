@@ -197,7 +197,7 @@ function sendStok(text) {
     str += `*┊・ Desk*: ${produkInfo.deskProduk}\n`
     str += `*╰┈┈┈┈┈┈┈┈*\n`
   }
-  await m.reply(str.trim())
+  m.reply(str.trim())
 }
 
 export async function deleteMessage(message) {
