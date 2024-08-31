@@ -11,10 +11,6 @@ import printMessage from './lib/printMessage.js'
 import helperMessage from './lib/helperMessage.js'
 import db, { loadDatabase } from './lib/database.js'
 
-var listProduk = Object.entries(db.data.store).filter(([key, value]) => {
-  return value.namaProduk && value.hargaProduk && value.deskProduk && value.dataProduk
-})
-
 export async function handler(store, chatUpdate) {
   if (db.data == null) await loadDatabase()
   if (!chatUpdate.messages) return
@@ -41,10 +37,14 @@ export async function handler(store, chatUpdate) {
     let text = _args.join` `
     command = (command || '').toLowerCase()
     
+    var listProduk = Object.entries(db.data.store).filter(([key, value]) => {
+      return value.namaProduk && value.hargaProduk && value.deskProduk && value.dataProduk
+    })
+    
     if (!usedPrefix) return
     m.isCommand = true
     try {
-      switch (command) {
+      switch (command.replace(/stok/i, '')) {
         // MAIN
         case 'ping':
           let { performance } = (await import('perf_hooks')).default
@@ -145,10 +145,6 @@ export async function handler(store, chatUpdate) {
             }
           }, 10_000)
           break
-        case 'stok':
-          if (!listProduk.length) throw 'Tidak ada stok yang tersedia!'
-          sendStok()
-          break
         case 'delproduk':
           if (!text) throw `Uhm.. Contoh: ${usedPrefix + command} kodeProduk`
           if (!isOwner) throw 'Fitur Khusus Owner!'
@@ -158,21 +154,19 @@ export async function handler(store, chatUpdate) {
           m.reply(`Berhasil menghapus ${delProduk}`)
           break
         default:
-          if (Config.execPrefix.exec(m.text) && isOwner) {
-            let i = 15
-            let _return, _text = (/^(×|=)>/.test(usedPrefix) ? 'return ' : '') + noPrefix
-            try {
-              let exec = new(async () => {}).constructor('print', 'm', 'conn', 'process', 'args', 'text', 'db', 'store', _text)
-              _return = await exec.call(this, (...args) => {
-                if (--i < 1) return
-                return m.reply(format(...args))
-              }, m, this, process, args, text, db, store)
-            } catch (e) {
-              _return = e
-            } finally {
-              await m.reply(format(_return))
+          function sendStok(text) {
+            let str = text || ''
+            for (let [key, produkInfo] of listProduk) {
+              str += `*╭────〔 ${produkInfo.namaProduk} 〕─*\n`
+              str += `*┊・ Harga*: ${produkInfo.hargaProduk}\n`
+              str += `*┊・ Stok Tersedia*: ${produkInfo.dataProduk.length}\n`
+              str += `*┊・ Stok Terjual*: ${produkInfo.dataTerjual}\n`
+              str += `*┊・ Kode*: ${key}\n`
+              str += `*┊・ Desk*: ${produkInfo.deskProduk}\n`
+              str += `*╰┈┈┈┈┈┈┈┈*\n`
             }
           }
+          await m.reply(str.trim())
       }
     } catch (e) {
       m.error = e
@@ -183,20 +177,6 @@ export async function handler(store, chatUpdate) {
   } finally {
     await printMessage(m, this)
   }
-}
-
-function sendStok(text) {
-  let str = text || ''
-  for (let [key, produkInfo] of listProduk) {
-    str += `*╭────〔 ${produkInfo.namaProduk} 〕─*\n`
-    str += `*┊・ Harga*: ${produkInfo.hargaProduk}\n`
-    str += `*┊・ Stok Tersedia*: ${produkInfo.dataProduk.length}\n`
-    str += `*┊・ Stok Terjual*: ${produkInfo.dataTerjual}\n`
-    str += `*┊・ Kode*: ${key}\n`
-    str += `*┊・ Desk*: ${produkInfo.deskProduk}\n`
-    str += `*╰┈┈┈┈┈┈┈┈*\n`
-  }
-  this.reply(m.chat, str.trim())
 }
 
 export async function deleteMessage(message) {
