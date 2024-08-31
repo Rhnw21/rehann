@@ -160,7 +160,7 @@ export async function handler(store, chatUpdate) {
       function sendStok(text) {
         let str = text || ''
         for (let [key, produkInfo] of listProduk) {
-          str += `乂 ${produkInfo.namaProduk}`
+          str += `乂 ${produkInfo.namaProduk}\n`
           str += `*×* Desk Produk: ${produkInfo.deskProduk}\n`
           str += `*×* Kode: ${key}\n`
           str += `*×* Harga: ${produkInfo.hargaProduk}\n`
