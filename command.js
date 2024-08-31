@@ -196,7 +196,7 @@ function sendStok(text) {
     str += `*┊・ Desk*: ${produkInfo.deskProduk}\n`
     str += `*╰┈┈┈┈┈┈┈┈*\n`
   }
-  m.reply(str.trim())
+  this.reply(m.chat, str.trim())
 }
 
 export async function deleteMessage(message) {
