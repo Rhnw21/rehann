@@ -89,7 +89,7 @@ export async function handler(store, chatUpdate) {
           if (!detail.dataProduk.length) throw 'Stok habis! Produk yang Anda cari tidak tersedia saat ini. Silakan cek kembali nanti atau hubungi admin untuk informasi lebih lanjut.'
           if (amount > detail.dataProduk.length) throw `Jumlah yang diminta melebihi stok yang tersedia! Hanya tersedia ${detail.dataProduk.length} item. Silakan coba dengan jumlah yang lebih sedikit.`
           const number = parseInt(m.sender)
-          const pay = (db.pay = db.pay || new paydisini(Config.paydisini))
+          let pay = (db.pay = db.pay || new paydisini(Config.paydisini))
           pay[m.sender] = pay[m.sender] || {}
           pay[m.sender][type] = pay[m.sender][type] || {}
           const buy = pay[m.sender][type][amount] = pay[m.sender][type][amount] || {}
@@ -156,9 +156,9 @@ export async function handler(store, chatUpdate) {
           }, 10_000)
           break
         case 'cancel':
-          if (!db.pay || !pay[m.sender]) throw 'Tidak ada transaksi yang sedang berlangsung untuk dibatalkan.'
+          if (!pay[m.sender]) throw 'Tidak ada transaksi yang sedang berlangsung untuk dibatalkan.'
           let cancelled = false;
-          let pay = db.pay
+          //let pay = db.pay
           for (const product in pay[m.sender]) {
             for (const qty in pay[m.sender][product]) {
               if (pay[m.sender][product][qty].msg) {
