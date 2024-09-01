@@ -71,12 +71,14 @@ export async function handler(store, chatUpdate) {
         case 'addstok':
           if (!text) throw `Uhm.. Contoh: ${usedPrefix + command} kodeProduk`
           if (!isOwner) throw 'Fitur Khusus Owner!'
-          var [kodeProduk, dataProduk] = text.split(' ')
-          var qStok = m.quoted.text
-          for (const v of qStok.split('\n')) {
+          var [kodeProduk, ...dataProduk] = text.split(' ')
+          dataProduk = dataProduk.join(' ').trim()
+          var stokData = m.quoted && m.quoted.text ? m.quoted.text : dataProduk
+          if (!stokData) throw 'Tidak ada data stok yang ditemukan! Pastikan mengutip pesan atau memberikan data stok setelah kode produk.'
+          for (const v of stokData.split('\n')) {
             db.data.store[kodeProduk].dataProduk.push(v)
           }
-          m.reply('Berhasil menambhkan stok pada database!')
+          m.reply('Berhasil menambahkan stok pada database!')
           break
         case 'buy':
           let paydisini = (await import('./lib/paydisini.js')).default
