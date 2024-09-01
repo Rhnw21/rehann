@@ -156,7 +156,7 @@ export async function handler(store, chatUpdate) {
           }, 10_000)
           break
         case 'cancel':
-          if (!pay[m.sender]) throw 'Tidak ada transaksi yang sedang berlangsung untuk dibatalkan.'
+          if (!db.pay || !pay[m.sender]) throw 'Tidak ada transaksi yang sedang berlangsung untuk dibatalkan.'
           let cancelled = false;
           //let pay = db.pay
           for (const product in pay[m.sender]) {
