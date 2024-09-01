@@ -160,8 +160,7 @@ export async function handler(store, chatUpdate) {
 *×* Untuk membeli ketik perintah berikut.
 *×* Contoh: ${usedPrefix}buy <kode> <jumlah>
 *×* ${usedPrefix}buy <kode> <jumlah>
-*×* Hubungi Admin jika ada kendala ${Config.owner}
-`
+*×* Hubungi Admin jika ada kendala ${Config.owner}\n\n`
           await sendStok(captionStok)
           break
         default:
