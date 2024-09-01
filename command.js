@@ -59,10 +59,10 @@ export async function handler(store, chatUpdate) {
           await m.reply(stdout?.toString?.() || stdout)
           break
         // STORE
-        case 'addproduk':
-          if (!text) throw `Uhm.. Contoh: ${usedPrefix + command} kodeProduk,namaProduk,hargaProduk,deskProduk`
+        case 'setstok':
+          if (!text) throw `Uhm.. Contoh: ${usedPrefix + command} kodeProduk@namaProduk@hargaProduk@deskProduk``
           if (!isOwner) throw 'Fitur Khusus Owner!'
-          var [ kodeProduk, namaProduk, hargaProduk, deskProduk ] = text.split('@')
+          var [kodeProduk, namaProduk, hargaProduk, deskProduk] = text.split('@')
           if (!kodeProduk && !hargaProduk) throw `Uhm.. Contoh: ${usedPrefix + command} kodeProduk@namaProduk@hargaProduk@deskProduk`
           kodeProduk = kodeProduk.toLowerCase()
           db.data.store[kodeProduk] = { namaProduk, hargaProduk, deskProduk, dataProduk: [], dataTerjual: 0 }
