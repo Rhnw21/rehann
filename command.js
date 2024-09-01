@@ -131,7 +131,7 @@ export async function handler(store, chatUpdate) {
             if (isOwner || check.data.status.toLowerCase() == 'success') {
               await clear()
               if (detail.amount && detail.amount != Infinity) detail.amount -= 1
-              detail.dataTerjual = (detail.dataTerjual || 0) + parseInt(amount)
+              detail.dataTerjual = (detail.dataTerjual) + parseInt(amount)
               const ambilStok = detail.dataProduk.length - amount
               const fileContent = detail.dataProduk.slice(ambilStok).map((dataProduk) => `${dataProduk}`).join('\n')
               const filePath = await transaksiPath(fileContent)
@@ -155,6 +155,9 @@ export async function handler(store, chatUpdate) {
           break
         case 'stok':
           if (!listProduk.length) throw 'Tidak ada produk tersedia!!'
+          const captionStok = `
+
+`
           await sendStok()
           break
         default:
