@@ -86,8 +86,8 @@ export async function handler(store, chatUpdate) {
           let [type, amount] = text.split(' ')
           const detail = listProduk.find(([key]) => key == type)?.[1]
           if (!detail) throw 'Produk tersebut tidak ada!'
-          if (!detail.dataProduk.length) throw 'Maaf stok yang anda cari telah habis!'
-          if (amount > detail.dataProduk.length) throw `Maaf stok yang tersedia hanya ${detail.dataProduk.length}`
+          if (!detail.dataProduk.length) throw 'Stok habis! Produk yang Anda cari tidak tersedia saat ini. Silakan cek kembali nanti atau hubungi admin untuk informasi lebih lanjut.'
+          if (amount > detail.dataProduk.length) throw `Jumlah yang diminta melebihi stok yang tersedia! Hanya tersedia ${detail.dataProduk.length} item. Silakan coba dengan jumlah yang lebih sedikit.`
           const number = parseInt(m.sender)
           const pay = (db.pay = db.pay || new paydisini(Config.paydisini))
           pay[m.sender] = pay[m.sender] || {}
