@@ -118,6 +118,8 @@ export async function handler(store, chatUpdate) {
 *Total Harus Dibayar:* Rp ${parseInt(res.data.amount).toLocaleString('id')}
 *Status Transaksi:* ${res.data.status}
 *Transaksi Expired:* ${res.data.expired}
+
+`KETIK ${usedPrefix}cancel untuk membatalkan transaksi.`
 `.trim()
           buy.msg  = await this.sendMessage(m.chat, {
             image: { url: res.data.qrcode_url },
