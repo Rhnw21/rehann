@@ -192,7 +192,7 @@ export async function handler(store, chatUpdate) {
           if (!listProduk.length) throw 'Tidak ada produk tersedia!!'
           const captionStok = `
 *乂 BOT AUTO ORDER*
-*× Ketik ${usedPrefix}caraorder* untuk membeli produk.
+*×* Ketik ${usedPrefix}caraorder* untuk membeli produk.
 *×* Jika Anda menghadapi kendala atau memiliki pertanyaan lebih lanjut, jangan ragu untuk menghubungi Admin di: ${Config.owner}\n\n`
           await sendStok(captionStok)
           break
