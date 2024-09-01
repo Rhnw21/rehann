@@ -156,27 +156,26 @@ export async function handler(store, chatUpdate) {
           }, 10_000)
           break
         case 'cancel':
-          if (!db.pay || !pay[m.sender]) throw 'Tidak ada transaksi yang sedang berlangsung untuk dibatalkan.'
+          if (!db.pay || !db.pay[m.sender]) throw 'Tidak ada transaksi yang sedang berlangsung untuk dibatalkan.'
           let cancelled = false;
-          //let pay = db.pay
-          for (const product in pay[m.sender]) {
-            for (const qty in pay[m.sender][product]) {
-              if (pay[m.sender][product][qty].msg) {
-                clearInterval(pay[m.sender][product][qty].interval);
-                await this.sendMessage(m.chat, { delete: pay[m.sender][product][qty].msg.key });
-                delete pay[m.sender][product][qty]
+          for (const product in db.pay[m.sender]) {
+            for (const qty in db.pay[m.sender][product]) {
+              if (db.pay[m.sender][product][qty].msg) {
+                clearInterval(db.pay[m.sender][product][qty].interval);
+                await this.sendMessage(m.chat, { delete: db.pay[m.sender][product][qty].msg.key });
+                delete db.pay[m.sender][product][qty]
                 cancelled = true;
               }
             }
           }
           if (cancelled) {
-            for (const product in pay[m.sender]) {
-              if (Object.keys(pay[m.sender][product]).length === 0) {
-                delete pay[m.sender][product];
+            for (const product in db.pay[m.sender]) {
+              if (Object.keys(db.pay[m.sender][product]).length === 0) {
+                delete db.pay[m.sender][product];
               }
             }
-            if (Object.keys(pay[m.sender]).length === 0) {
-              delete pay[m.sender];
+            if (Object.keys(db.pay[m.sender]).length === 0) {
+              delete db.pay[m.sender];
             }
             m.reply('Transaksi yang sedang berlangsung berhasil dibatalkan.');
           } else {
