@@ -60,7 +60,7 @@ export async function handler(store, chatUpdate) {
           break
         // STORE
         case 'setstok':
-          if (!text) throw `Uhm.. Contoh: ${usedPrefix + command} kodeProduk@namaProduk@hargaProduk@deskProduk``
+          if (!text) throw `Uhm.. Contoh: ${usedPrefix + command} kodeProduk@namaProduk@hargaProduk@deskProduk`
           if (!isOwner) throw 'Fitur Khusus Owner!'
           var [kodeProduk, namaProduk, hargaProduk, deskProduk] = text.split('@')
           if (!kodeProduk && !hargaProduk) throw `Uhm.. Contoh: ${usedPrefix + command} kodeProduk@namaProduk@hargaProduk@deskProduk`
