@@ -93,7 +93,15 @@ export async function handler(store, chatUpdate) {
           pay[m.sender] = pay[m.sender] || {}
           pay[m.sender][type] = pay[m.sender][type] || {}
           const buy = pay[m.sender][type][amount] = pay[m.sender][type][amount] || {}
-          if (buy.msg) throw 'Selesaikan transaksi anda sebelumnya!'
+          if (pay[m.sender]) {
+            for (const product in pay[m.sender]) {
+              for (const qty in pay[m.sender][product]) {
+                if (pay[m.sender][product][qty].msg) {
+                  throw 'Transaksi sebelumnya belum selesai! Silakan selesaikan transaksi yang sedang berlangsung untuk produk lain sebelum memulai yang baru.'
+                }
+              }
+            }
+          }
           const res = await pay.create(detail.hargaProduk * amount, `${number} order ${type}`, {
             ewalet_phone: number
           })
