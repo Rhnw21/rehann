@@ -193,7 +193,7 @@ export async function handler(store, chatUpdate) {
           const captionStok = `
 *乂 BOT AUTO ORDER*
 *×* *Ketik ${usedPrefix}caraorder* jika kurang paham.
-*×* Jika Anda menghadapi kendala atau memiliki pertanyaan lebih lanjut, jangan ragu untuk menghubungi Admin di: ${Config.owner}\n\n`
+*×* Jika Anda menghadapi kendala atau memiliki pertanyaan lebih lanjut, jangan ragu untuk menghubungi Admin di: wa.me/${Config.owner}\n\n`
           await sendStok(captionStok)
           break
         case 'caraorder':
