@@ -156,7 +156,11 @@ export async function handler(store, chatUpdate) {
         case 'stok':
           if (!listProduk.length) throw 'Tidak ada produk tersedia!!'
           const captionStok = `
-
+*乂 CARA ORDER*
+*×* Untuk membeli ketik perintah berikut.
+*×* Contoh: ${usedPrefix}buy <kode> <jumlah>
+*×* ${usedPrefix}buy <kode> <jumlah>
+*×* Hubungi Admin jika ada kendala ${Config.owner}
 `
           await sendStok()
           break
