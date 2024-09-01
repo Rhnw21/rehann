@@ -229,10 +229,11 @@ export async function handler(store, chatUpdate) {
       function sendStok(text) {
         let str = text || ''
         for (let [key, produkInfo] of listProduk) {
+          const harga = Number(produkInfo.hargaProduk)
           str += `*乂 ${produkInfo.namaProduk.toUpperCase()}*\n`
           str += `*×* Kode: ${key}\n`
           str += `*×* Desk: ${produkInfo.deskProduk}\n`
-          str += `*×* Harga: Rp ${produkInfo.hargaProduk.toLocaleString('id')}\n`
+          str += `*×* Harga: Rp ${harga.toLocaleString('id')}\n`
           str += `*×* Stok Tersedia: ${produkInfo.dataProduk.length > 0 ? `${produkInfo.dataProduk.length}` : '❌ Habis'}\n`
           str += `*×* Stok Terjual: ${produkInfo.dataTerjual}\n`
           str += `*${'='.repeat(30)}*\n\n`
