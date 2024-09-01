@@ -196,6 +196,19 @@ export async function handler(store, chatUpdate) {
 *×* Jika Anda menghadapi kendala atau memiliki pertanyaan lebih lanjut, jangan ragu untuk menghubungi Admin di: ${Config.owner}\n\n`
           await sendStok(captionStok)
           break
+        case 'caraorder':
+          const caraOrderText = `
+**Cara Memesan Produk:**
+1. **Pilih produk** yang ingin Anda beli dari daftar yang tersedia.
+2. **Gunakan perintah** berikut untuk melakukan pembelian: *${usedPrefix}buy <kode> <jumlah>*.
+   - **Kode**: Kode unik untuk produk yang Anda pilih.
+   - **Jumlah**: Jumlah unit produk yang ingin Anda beli.
+3. **Ikuti instruksi** yang diberikan untuk menyelesaikan transaksi.
+4. **Hubungi Admin** jika ada pertanyaan atau kendala selama proses pembelian: ${Config.owner}
+`.trim()
+
+          await m.reply(caraOrderText)
+          break
         default:
           if (Config.execPrefix.exec(m.text) && isOwner) {
             let i = 15
