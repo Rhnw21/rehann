@@ -194,7 +194,6 @@ export async function handler(store, chatUpdate) {
 *乂 CARA ORDER PRODUK*
 *×* Untuk melakukan pembelian, silakan ketik perintah dengan format sebagai berikut:
 *×* Contoh: ${usedPrefix}buy <kodeProduk> <jumlah>
-*×* Pastikan Anda mengganti <kodeProduk> dengan kode produk yang tersedia dan <jumlah> dengan jumlah yang ingin Anda beli.
 *×* Contoh penggunaan: ${usedPrefix}buy ABC123 2
 *×* Jika Anda menghadapi kendala atau memiliki pertanyaan lebih lanjut, jangan ragu untuk menghubungi Admin di: ${Config.owner}\n\n`
           await sendStok(captionStok)
