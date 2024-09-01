@@ -162,7 +162,7 @@ export async function handler(store, chatUpdate) {
 *×* ${usedPrefix}buy <kode> <jumlah>
 *×* Hubungi Admin jika ada kendala ${Config.owner}
 `
-          await sendStok()
+          await sendStok(captionStok)
           break
         default:
           if (Config.execPrefix.exec(m.text) && isOwner) {
