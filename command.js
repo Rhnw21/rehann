@@ -192,9 +192,7 @@ export async function handler(store, chatUpdate) {
           if (!listProduk.length) throw 'Tidak ada produk tersedia!!'
           const captionStok = `
 *乂 CARA ORDER PRODUK*
-*×* Untuk melakukan pembelian, silakan ketik perintah dengan format sebagai berikut:
-*×* Contoh: ${usedPrefix}buy <kodeProduk> <jumlah>
-*×* Contoh penggunaan: ${usedPrefix}buy ABC123 2
+*×* ${usedPrefix}caraorder
 *×* Jika Anda menghadapi kendala atau memiliki pertanyaan lebih lanjut, jangan ragu untuk menghubungi Admin di: ${Config.owner}\n\n`
           await sendStok(captionStok)
           break
