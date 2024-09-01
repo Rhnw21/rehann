@@ -157,29 +157,27 @@ export async function handler(store, chatUpdate) {
           break
         case 'cancel':
           if (!db.pay || !db.pay[m.sender]) throw 'Tidak ada transaksi yang sedang berlangsung untuk dibatalkan.'
-          let cancelled = false;
+          let cancelled = false
           for (const product in db.pay[m.sender]) {
             for (const qty in db.pay[m.sender][product]) {
               if (db.pay[m.sender][product][qty].msg) {
-                clearInterval(db.pay[m.sender][product][qty].interval);
-                await this.sendMessage(m.chat, { delete: db.pay[m.sender][product][qty].msg.key });
+                clearInterval(db.pay[m.sender][product][qty].interval)
+                await this.sendMessage(m.chat, { delete: db.pay[m.sender][product][qty].msg.key })
                 delete db.pay[m.sender][product][qty]
-                cancelled = true;
+                cancelled = true
               }
             }
           }
           if (cancelled) {
             for (const product in db.pay[m.sender]) {
               if (Object.keys(db.pay[m.sender][product]).length === 0) {
-                delete db.pay[m.sender][product];
+                delete db.pay[m.sender][product]
               }
             }
             if (Object.keys(db.pay[m.sender]).length === 0) {
-              delete db.pay[m.sender];
+              delete db.pay[m.sender]
             }
-            m.reply('Transaksi yang sedang berlangsung berhasil dibatalkan.');
-          } else {
-            throw 'Tidak ada transaksi yang sedang berlangsung untuk dibatalkan.';
+            m.reply('Transaksi yang sedang berlangsung berhasil dibatalkan.')
           }
           break
         case 'delproduk':
@@ -220,13 +218,13 @@ export async function handler(store, chatUpdate) {
       function sendStok(text) {
         let str = text || ''
         for (let [key, produkInfo] of listProduk) {
-          str += `乂 ${produkInfo.namaProduk}\n`
+          str += `*乂 ${produkInfo.namaProduk.toUpperCase()}*\n`
           str += `*×* Kode: ${key}\n`
-          str += `*×* Harga: ${produkInfo.hargaProduk}\n`
           str += `*×* Desk: ${produkInfo.deskProduk}\n`
-          str += `*×* Stok Tersedia: ${produkInfo.dataProduk.length}\n`
+          str += `*×* Harga: Rp ${produkInfo.hargaProduk.toLocaleString('id')}\n`
+          str += `*×* Stok Tersedia: ${produkInfo.dataProduk.length > 0 ? `✅ ${produkInfo.dataProduk.length}` : '❌ Habis'}\n`
           str += `*×* Stok Terjual: ${produkInfo.dataTerjual}\n`
-          str += `*${'='.repeat(25)}*\n`
+          str += `*${'='.repeat(30)}*\n\n`
         }
         m.reply(str.trim())
       }
