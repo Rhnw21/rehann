@@ -149,7 +149,7 @@ export async function handler(store, chatUpdate) {
               const filePath = await transaksiPath(fileContent)
               const fileNow = await this.sendMessage(m.chat, {
                 document: { url: filePath },
-                fileName: `data_${Date.now()}`,
+                fileName: `data`,
                 mimetype: 'text/plain',
                 caption: `*TRANSAKSI SUKSES*\n\n*Produk:* ${detail.namaProduk}\n*Jumlah:* ${amount}\n*Desk:* ${detail.deskProduk}`
               })
