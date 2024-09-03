@@ -151,7 +151,7 @@ export async function handler(store, chatUpdate) {
                 document: { url: filePath },
                 fileName: `data`,
                 mimetype: 'text/plain',
-                caption: `*TRANSAKSI SUKSES*\n\n*Produk:* ${detail.namaProduk}\n*Jumlah:* ${amount}\n*Desk:* ${detail.deskProduk}`
+                caption: `*TRANSAKSI SUKSES*`
               })
               detail.dataProduk.splice(ambilStok)
             }
