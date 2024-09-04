@@ -151,7 +151,7 @@ export async function handler(store, chatUpdate) {
 *TRANSAKSI SUKSES*
 
 *× Produk:* ${detail.namaProduk}
-*× Jumlah Beli:* ${detail.amount}
+*× Jumlah Beli:* ${amount}
 *× Harga:* ${detail.hargaProduk}
 `.trim()
               const fileNow = await this.sendMessage(m.chat, {
