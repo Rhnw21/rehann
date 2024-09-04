@@ -160,7 +160,7 @@ export async function handler(store, chatUpdate) {
                 mimetype: 'text/plain',
                 caption: `╭─〔 *TRANSAKSI SUKSES* 〕\n│ • Nama Produk: ${detail.namaProduk}\n│ • Desk Produk: ${detail.deskProduk}\n│ • Harga Produk: ${detail.hargaProduk}\n│ • Jumlah Beli: ${amount}\n│ • Pembeli: ${number}\n╰────`,
               })
-              await this.sendMessage(m.chat, { text: `${captionData}` }, { quoted: fileNow })
+              //await this.sendMessage(m.chat, { text: `${captionData}` }, { quoted: fileNow })
               detail.dataProduk.splice(ambilStok)
             }
           }, 10_000)
