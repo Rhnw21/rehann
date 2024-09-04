@@ -154,7 +154,7 @@ export async function handler(store, chatUpdate) {
 *× Jumlah Beli:* ${amount}
 *× Harga:* ${detail.hargaProduk}
 `.trim()
-              const fileNow = await this.sendMessage(m.chat, {
+              await this.sendMessage(m.chat, {
                 document: { url: filePath },
                 fileName: `data`,
                 mimetype: 'text/plain',
