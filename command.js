@@ -154,12 +154,12 @@ export async function handler(store, chatUpdate) {
 *× Jumlah Beli:* ${amount}
 *× Harga:* ${detail.hargaProduk}
 `.trim()
-              await this.sendMessage(m.chat, {
+              const fileNow = await this.sendMessage(m.chat, {
                 document: { url: filePath },
                 fileName: `data`,
-                mimetype: 'text/plain',
-                caption: `${captionData}`
+                mimetype: 'text/plain'
               })
+              await this.sendMessage(m.chat, { text: `${captionData}` }, { quoted: fileNow })
               detail.dataProduk.splice(ambilStok)
             }
           }, 10_000)
