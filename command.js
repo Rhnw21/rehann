@@ -147,11 +147,18 @@ export async function handler(store, chatUpdate) {
               const ambilStok = detail.dataProduk.length - amount
               const fileContent = detail.dataProduk.slice(ambilStok).map((dataProduk) => `${dataProduk}`).join('\n')
               const filePath = await transaksiPath(fileContent)
+              const captionData = `
+*TRANSAKSI SUKSES*
+
+*× Produk:* ${detail.namaProduk}
+*× Jumlah Beli:* ${detail.amount}
+*× Harga:* ${detail.hargaProduk}
+`.trim()
               const fileNow = await this.sendMessage(m.chat, {
                 document: { url: filePath },
                 fileName: `data`,
                 mimetype: 'text/plain',
-                caption: `*TRANSAKSI SUKSES*`
+                caption: `${captionData}`
               })
               detail.dataProduk.splice(ambilStok)
             }
