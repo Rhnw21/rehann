@@ -2,7 +2,7 @@ import chalk from 'chalk'
 import { format } from 'util'
 import { existsSync, mkdirSync } from 'fs'
 
-export const owner = ['6283832492541']
+export const owner = ['6283832492541', '6281358476414']
 
 export const database = 'mongodb+srv://bgsrhnsh:sembarang1@cluster0.o9xde6y.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
 export const databaseVersion = 1
